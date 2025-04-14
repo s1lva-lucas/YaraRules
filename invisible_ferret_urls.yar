@@ -1,3 +1,5 @@
+import "vt"
+
 rule invisible_ferret_urls_from_js_malware {
     meta:
         description = "Detects invisible ferret C2 on ports multiple ports"
@@ -16,5 +18,5 @@ rule invisible_ferret_urls_from_js_malware {
         $c2_5000 = /:5000\/(pdown|brow|keys|mclip|api\/clip)/ nocase // denoise
         $c2_5001 = /:5001\/(pdown|brow|keys|mclip|api\/clip)/ nocase // denoise
     condition:
-        any of them
+        vt.metadata.file_type == vt.FileType.JAVASCRIPT and any of them 
 }
